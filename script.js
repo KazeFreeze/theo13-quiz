@@ -5,38 +5,46 @@ document.addEventListener("DOMContentLoaded", () => {
   let originalQuestions = [];
   let isShuffled = false;
 
-  // Add shuffle function
-  function shuffleQuestions() {
-    const shuffled = [...originalQuestions];
-    for (let i = shuffled.length - 1; i > 0; i--) {
+  // Fisher-Yates shuffle algorithm
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      [array[i], array[j]] = [array[j], array[i]];
     }
-    return shuffled;
+    return array;
   }
 
-  // Toggle shuffle function
   function toggleShuffle() {
     isShuffled = !isShuffled;
     const btn = document.getElementById("shuffleBtn");
     btn.textContent = isShuffled ? "Unshuffle Questions" : "Shuffle Questions";
-    btn.classList.toggle("active", isShuffled);
+    btn.className = isShuffled ? "active" : "";
 
-    questions = isShuffled ? shuffleQuestions() : [...originalQuestions];
+    // Create new shuffled array or reset to original
+    questions = isShuffled
+      ? shuffleArray([...originalQuestions])
+      : [...originalQuestions];
+
+    // Reset quiz state
     currentQuestion = 0;
     score = 0;
-    showQuestion();
     document.getElementById("score").textContent = "";
+    showQuestion();
   }
 
-  fetch("questions.json")
-    .then((response) => response.json())
-    .then((data) => {
-      originalQuestions = data.questions;
-      questions = [...originalQuestions];
-      document.getElementById("shuffleBtn").onclick = toggleShuffle;
-      showQuestion();
-    });
+  function initializeQuiz() {
+    fetch("questions.json")
+      .then((response) => response.json())
+      .then((data) => {
+        originalQuestions = data.questions;
+        questions = [...originalQuestions];
+        document
+          .getElementById("shuffleBtn")
+          .addEventListener("click", toggleShuffle);
+        showQuestion();
+      })
+      .catch((error) => console.error("Error loading questions:", error));
+  }
 
   function showQuestion() {
     const question = questions[currentQuestion];
@@ -97,4 +105,5 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 3000);
     }
   }
+  initializeQuiz();
 });
