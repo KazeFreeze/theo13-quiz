@@ -2,11 +2,39 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentQuestion = 0;
   let score = 0;
   let questions = [];
+  let originalQuestions = [];
+  let isShuffled = false;
+
+  // Add shuffle function
+  function shuffleQuestions() {
+    const shuffled = [...originalQuestions];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  // Toggle shuffle function
+  function toggleShuffle() {
+    isShuffled = !isShuffled;
+    const btn = document.getElementById("shuffleBtn");
+    btn.textContent = isShuffled ? "Unshuffle Questions" : "Shuffle Questions";
+    btn.classList.toggle("active", isShuffled);
+
+    questions = isShuffled ? shuffleQuestions() : [...originalQuestions];
+    currentQuestion = 0;
+    score = 0;
+    showQuestion();
+    document.getElementById("score").textContent = "";
+  }
 
   fetch("questions.json")
     .then((response) => response.json())
     .then((data) => {
-      questions = data.questions;
+      originalQuestions = data.questions;
+      questions = [...originalQuestions];
+      document.getElementById("shuffleBtn").onclick = toggleShuffle;
       showQuestion();
     });
 

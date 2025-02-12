@@ -53,3 +53,21 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.controls {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#shuffleBtn {
+  background-color: #28a745;
+  margin-bottom: 20px;
+}
+
+#shuffleBtn.active {
+  background-color: #dc3545;
+}
+
+#shuffleBtn:hover {
+  opacity: 0.9;
+}
