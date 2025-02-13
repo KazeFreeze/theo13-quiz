@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
   let currentQuestion = 0;
-  let score = 0;
   let questions = [];
   let originalQuestions = [];
   let isShuffled = false;
+  let userAnswers = [];
   let startTime;
   let timerInterval;
 
@@ -22,16 +22,45 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.textContent = isShuffled ? "Unshuffle Questions" : "Shuffle Questions";
     btn.className = isShuffled ? "active" : "";
 
-    // Create new shuffled array or reset to original
     questions = isShuffled
       ? shuffleArray([...originalQuestions])
       : [...originalQuestions];
 
-    // Reset quiz state
     currentQuestion = 0;
-    score = 0;
+    userAnswers = [];
     document.getElementById("score").textContent = "";
+    document.getElementById("explanation").classList.remove("show");
+    document.getElementById("next").style.display = "none";
+    document.getElementById("back").style.display = "none";
     showQuestion();
+    stopTimer();
+    startTimer();
+  }
+
+  function startTimer() {
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+
+  function updateTimer() {
+    const elapsed = Date.now() - startTime;
+    const minutes = Math.floor(elapsed / 60000);
+    const seconds = Math.floor((elapsed % 60000) / 1000);
+    document.getElementById(
+      "timer"
+    ).textContent = `Time elapsed: ${minutes}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+  }
+
+  function calculateScore() {
+    return userAnswers.reduce((acc, answer) => {
+      return acc + (answer.selected === answer.correct ? 1 : 0);
+    }, 0);
   }
 
   function initializeQuiz() {
@@ -43,23 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document
           .getElementById("shuffleBtn")
           .addEventListener("click", toggleShuffle);
+        document.getElementById("next").addEventListener("click", nextQuestion);
         document
-          .getElementById("previous")
+          .getElementById("back")
           .addEventListener("click", previousQuestion);
-        document
-          .getElementById("submit")
-          .addEventListener("click", nextQuestion);
-        startTime = new Date();
-        timerInterval = setInterval(updateTimer, 1000);
+        startTimer();
         showQuestion();
       })
       .catch((error) => console.error("Error loading questions:", error));
-  }
-
-  function updateTimer() {
-    const now = new Date();
-    const elapsed = Math.floor((now - startTime) / 1000);
-    document.getElementById("timer").textContent = `Time Elapsed: ${elapsed}s`;
   }
 
   function showQuestion() {
@@ -69,11 +89,9 @@ document.addEventListener("DOMContentLoaded", () => {
       currentQuestion + 1
     } of ${questions.length}`;
 
-    // Clear previous choices
     const choicesDiv = document.getElementById("choices");
     choicesDiv.innerHTML = "";
 
-    // Add new choices
     for (const [key, value] of Object.entries(question.choices)) {
       const choice = document.createElement("div");
       choice.className = "choice";
@@ -83,10 +101,38 @@ document.addEventListener("DOMContentLoaded", () => {
       choicesDiv.appendChild(choice);
     }
 
-    document.getElementById("explanation").innerHTML = "";
-    document.getElementById("previous").style.display =
-      currentQuestion === 0 ? "none" : "inline-block";
-    document.getElementById("submit").style.display = "inline-block";
+    const userAnswer = userAnswers[currentQuestion];
+    if (userAnswer) {
+      document.querySelectorAll(".choice").forEach((choice) => {
+        const answerKey = choice.dataset.answer;
+        choice.style.backgroundColor =
+          answerKey === userAnswer.correct ? "#d4edda" : "#f8d7da";
+        if (answerKey === userAnswer.selected) {
+          choice.style.transform = "scale(1.02)";
+        }
+        choice.style.cursor = "not-allowed";
+      });
+      document.getElementById(
+        "explanation"
+      ).innerHTML = `<strong>Correct Answer:</strong> ${userAnswer.correct}<br>
+        <strong>Explanation:</strong> ${userAnswer.explanation}`;
+      document.getElementById("explanation").classList.add("show");
+      document.getElementById("next").style.display = "block";
+    } else {
+      document.getElementById("explanation").innerHTML = "";
+      document.getElementById("explanation").classList.remove("show");
+      document.getElementById("next").style.display = "none";
+      document.querySelectorAll(".choice").forEach((choice) => {
+        choice.style.backgroundColor = "";
+        choice.style.cursor = "pointer";
+      });
+    }
+
+    document.getElementById("back").style.display =
+      currentQuestion > 0 ? "block" : "none";
+    document.getElementById(
+      "score"
+    ).textContent = `Score: ${calculateScore()}/${questions.length}`;
   }
 
   function handleAnswer(e) {
@@ -94,32 +140,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const correct = questions[currentQuestion].correctAnswer;
     const explanation = questions[currentQuestion].explanation;
 
-    // Show explanation
+    userAnswers[currentQuestion] = { selected, correct, explanation };
+
+    document.querySelectorAll(".choice").forEach((choice) => {
+      const answerKey = choice.dataset.answer;
+      choice.style.backgroundColor =
+        answerKey === correct ? "#d4edda" : "#f8d7da";
+      choice.style.cursor = "not-allowed";
+      if (answerKey === selected) {
+        choice.style.transform = "scale(1.02)";
+      }
+    });
+
     document.getElementById(
       "explanation"
     ).innerHTML = `<strong>Correct Answer:</strong> ${correct}<br>
-           <strong>Explanation:</strong> ${explanation}`;
-
-    // Update score
-    if (selected === correct) score++;
-
-    // Update UI
-    document.querySelectorAll(".choice").forEach((choice) => {
-      choice.style.backgroundColor =
-        choice.dataset.answer === correct ? "#d4edda" : "#f8d7da";
-      choice.style.cursor = "not-allowed";
-    });
-
-    document.getElementById("submit").style.display = "none";
+      <strong>Explanation:</strong> ${explanation}`;
+    document.getElementById("explanation").classList.add("show");
+    document.getElementById("next").style.display = "block";
     document.getElementById(
       "score"
-    ).textContent = `Score: ${score}/${questions.length}`;
+    ).textContent = `Score: ${calculateScore()}/${questions.length}`;
   }
 
   function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
       currentQuestion++;
       showQuestion();
+    } else {
+      stopTimer();
+      alert(
+        `Quiz completed! Final score: ${calculateScore()}/${questions.length}`
+      );
     }
   }
 
