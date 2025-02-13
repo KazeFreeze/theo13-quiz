@@ -1,17 +1,13 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  max-width: 800px;
-}
-
-.container {
-  padding: 10px;
 }
 
 #progress {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-weight: bold;
 }
 
@@ -39,29 +35,21 @@ body {
   background-color: #f0f0f0;
 }
 
-.choice.selected {
-  background-color: #cce5ff;
-}
-
-.choice.correct {
-  background-color: #d4edda;
-}
-
-.choice.incorrect {
-  background-color: #f8d7da;
-}
-
 #explanation {
   margin-top: 20px;
   padding: 15px;
   background-color: #f8f9fa;
   border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  animation: fadeIn 0.5s ease;
 }
 
-#explanation.fade-in {
-  opacity: 1;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 #score {
@@ -76,6 +64,7 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -100,24 +89,20 @@ button:hover {
   opacity: 0.9;
 }
 
-.nav-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+.nav-btn {
+  margin: 10px;
 }
 
-/* Mobile adjustments */
 @media (max-width: 600px) {
   body {
     padding: 10px;
   }
 
-  .nav-buttons {
-    flex-direction: column;
+  .choice {
+    padding: 8px;
   }
 
-  .nav-buttons button {
-    width: 100%;
-    margin-bottom: 10px;
+  button {
+    padding: 8px 16px;
   }
 }

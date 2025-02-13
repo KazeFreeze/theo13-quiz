@@ -4,23 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let questions = [];
   let originalQuestions = [];
   let isShuffled = false;
-  let userAnswers = [];
-  let quizStartTime;
+  let startTime;
+  let timerInterval;
 
-  // Timer
-  function startTimer() {
-    quizStartTime = Date.now();
-    setInterval(() => {
-      const elapsed = Date.now() - quizStartTime;
-      const seconds = Math.floor(elapsed / 1000) % 60;
-      const minutes = Math.floor(elapsed / 60000);
-      document.getElementById("timer").textContent = `Time: ${String(
-        minutes
-      ).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-    }, 1000);
-  }
-
-  // Fisher-Yates shuffle
+  // Fisher-Yates shuffle algorithm
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -34,12 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("shuffleBtn");
     btn.textContent = isShuffled ? "Unshuffle Questions" : "Shuffle Questions";
     btn.className = isShuffled ? "active" : "";
+
+    // Create new shuffled array or reset to original
     questions = isShuffled
       ? shuffleArray([...originalQuestions])
       : [...originalQuestions];
+
+    // Reset quiz state
     currentQuestion = 0;
     score = 0;
-    userAnswers = new Array(questions.length).fill(null);
     document.getElementById("score").textContent = "";
     showQuestion();
   }
@@ -50,20 +40,26 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((data) => {
         originalQuestions = data.questions;
         questions = [...originalQuestions];
-        userAnswers = new Array(questions.length).fill(null);
         document
           .getElementById("shuffleBtn")
           .addEventListener("click", toggleShuffle);
         document
-          .getElementById("next")
-          .addEventListener("click", goToNextQuestion);
+          .getElementById("previous")
+          .addEventListener("click", previousQuestion);
         document
-          .getElementById("back")
-          .addEventListener("click", goToPreviousQuestion);
+          .getElementById("submit")
+          .addEventListener("click", nextQuestion);
+        startTime = new Date();
+        timerInterval = setInterval(updateTimer, 1000);
         showQuestion();
-        startTimer();
       })
       .catch((error) => console.error("Error loading questions:", error));
+  }
+
+  function updateTimer() {
+    const now = new Date();
+    const elapsed = Math.floor((now - startTime) / 1000);
+    document.getElementById("timer").textContent = `Time Elapsed: ${elapsed}s`;
   }
 
   function showQuestion() {
@@ -73,87 +69,61 @@ document.addEventListener("DOMContentLoaded", () => {
       currentQuestion + 1
     } of ${questions.length}`;
 
+    // Clear previous choices
     const choicesDiv = document.getElementById("choices");
     choicesDiv.innerHTML = "";
+
+    // Add new choices
     for (const [key, value] of Object.entries(question.choices)) {
       const choice = document.createElement("div");
       choice.className = "choice";
       choice.innerHTML = `<strong>${key}:</strong> ${value}`;
       choice.dataset.answer = key;
-      choice.onclick = () => selectAnswer(key);
-      if (userAnswers[currentQuestion] === key) {
-        choice.classList.add("selected");
-      }
+      choice.onclick = handleAnswer;
       choicesDiv.appendChild(choice);
     }
 
-    if (userAnswers[currentQuestion] !== null) {
-      showExplanation();
-    } else {
-      document.getElementById("explanation").innerHTML = "";
-    }
-
-    document.getElementById("back").disabled = currentQuestion === 0;
-    document.getElementById("next").disabled =
-      userAnswers[currentQuestion] === null;
+    document.getElementById("explanation").innerHTML = "";
+    document.getElementById("previous").style.display =
+      currentQuestion === 0 ? "none" : "inline-block";
+    document.getElementById("submit").style.display = "inline-block";
   }
 
-  function selectAnswer(selected) {
-    userAnswers[currentQuestion] = selected;
+  function handleAnswer(e) {
+    const selected = e.target.dataset.answer;
+    const correct = questions[currentQuestion].correctAnswer;
+    const explanation = questions[currentQuestion].explanation;
+
+    // Show explanation
+    document.getElementById(
+      "explanation"
+    ).innerHTML = `<strong>Correct Answer:</strong> ${correct}<br>
+           <strong>Explanation:</strong> ${explanation}`;
+
+    // Update score
+    if (selected === correct) score++;
+
+    // Update UI
     document.querySelectorAll(".choice").forEach((choice) => {
-      if (choice.dataset.answer === selected) {
-        choice.classList.add("selected");
-      } else {
-        choice.classList.remove("selected");
-      }
+      choice.style.backgroundColor =
+        choice.dataset.answer === correct ? "#d4edda" : "#f8d7da";
+      choice.style.cursor = "not-allowed";
     });
-    showExplanation();
-    document.getElementById("next").disabled = false;
-    updateScore();
-  }
 
-  function showExplanation() {
-    const question = questions[currentQuestion];
-    const explanationDiv = document.getElementById("explanation");
-    explanationDiv.innerHTML = `<strong>Correct Answer:</strong> ${question.correctAnswer}<br>
-      <strong>Explanation:</strong> ${question.explanation}`;
-
-    // Trigger fade-in animation
-    explanationDiv.classList.remove("fade-in");
-    void explanationDiv.offsetWidth;
-    explanationDiv.classList.add("fade-in");
-
-    document.querySelectorAll(".choice").forEach((choice) => {
-      if (choice.dataset.answer === question.correctAnswer) {
-        choice.classList.add("correct");
-        choice.classList.remove("incorrect");
-      } else if (choice.dataset.answer === userAnswers[currentQuestion]) {
-        choice.classList.add("incorrect");
-        choice.classList.remove("correct");
-      } else {
-        choice.classList.remove("correct", "incorrect");
-      }
-    });
-  }
-
-  function updateScore() {
-    score = 0;
-    questions.forEach((q, index) => {
-      if (userAnswers[index] === q.correctAnswer) score++;
-    });
+    document.getElementById("submit").style.display = "none";
     document.getElementById(
       "score"
     ).textContent = `Score: ${score}/${questions.length}`;
   }
 
-  function goToNextQuestion() {
+  function nextQuestion() {
     if (currentQuestion < questions.length - 1) {
       currentQuestion++;
       showQuestion();
     }
   }
 
-  function goToPreviousQuestion() {
+  function previousQuestion() {
     if (currentQuestion > 0) {
       currentQuestion--;
       showQuestion();
