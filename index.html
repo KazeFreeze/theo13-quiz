@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Mobile-friendly meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Moral Theology Quiz</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -12,10 +14,14 @@
     <div class="container">
       <h1>Moral Theology Quiz</h1>
       <div id="progress">Question 1 of 10</div>
+      <div id="timer">Time: 00:00</div>
       <div id="question-container">
         <div id="question"></div>
         <div id="choices"></div>
-        <button id="submit">Submit</button>
+        <div class="nav-buttons">
+          <button id="back" disabled>Back</button>
+          <button id="next" disabled>Next</button>
+        </div>
         <div id="explanation"></div>
         <div id="score"></div>
       </div>
