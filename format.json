@@ -1,0 +1,31 @@
+{
+  "title": "Module 1: Principles of Moral Theology",
+  "questions": [
+    {
+      "module": "Module 1: Principles of Moral Theology",
+      "section": "1.A. Freedom and Conscience (1.1 Introduction to Moral Theology (FC 1))",
+      "question": "Understanding the principles upon which the Church's moral teachings rest is more important than solving particular moral problems, since:",
+      "choices": {
+        "A": "Human persons are not in control of their destiny, but are fated for salvation or damnation by God's will.",
+        "B": "Communicating moral truth effectively requires that we be able to explain why a given choice is good or bad.",
+        "C": "Morality is highly subjective, such that different people seldom agree on what is a good or fulfilling way to live",
+        "D": "Option 1 and Option 2"
+      },
+      "correctAnswer": "B",
+      "explanation": "Communicating moral truth effectively requires that we be able to explain why a given choice is good or bad.\nSee FC, p. 4."
+    },
+    {
+      "module": "Module 1: Principles of Moral Theology",
+      "section": "1.A. Freedom and Conscience (1.1 Introduction to Moral Theology (FC 1))",
+      "question": "Moral theology is the branch of theology concerned principally and properly with:",
+      "choices": {
+        "A": "The possibility of revelation itself and revealed truths concerning God.",
+        "B": "The offering of the Church's public worship, especially the sacraments.",
+        "C": "The relationship between human actions and goodness, in light of faith.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "The relationship between human actions and\ngoodness, in light of faith.\nSee FC, pp. 1-2."
+    }
+  ]
+}

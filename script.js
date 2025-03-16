@@ -6,6 +6,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let userAnswers = [];
   let startTime;
   let timerInterval;
+  let quizId = "";
+  let quizTitle = "";
+
+  // Get the quiz ID from the URL hash
+  function getQuizId() {
+    const hash = window.location.hash;
+    if (hash) {
+      return hash.substring(1); // Remove the # character
+    }
+    return "Q1"; // Default to Q1 if no hash is present
+  }
+
+  // Handle back to menu button
+  document.getElementById("backToMenu").addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 
   // Fisher-Yates shuffle algorithm
   function shuffleArray(array) {
@@ -64,10 +80,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initializeQuiz() {
-    fetch("questions.json")
-      .then((response) => response.json())
+    quizId = getQuizId();
+    const questionFile = `${quizId}-questions.json`;
+
+    fetch(questionFile)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to load questions. Redirecting to menu...");
+        }
+        return response.json();
+      })
       .then((data) => {
         originalQuestions = data.questions;
+        quizTitle = data.title || "Moral Theology Quiz";
+        document.getElementById("quiz-title").textContent = quizTitle;
+        document.title = quizTitle;
+
         questions = [...originalQuestions];
         document
           .getElementById("shuffleBtn")
@@ -79,7 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
         startTimer();
         showQuestion();
       })
-      .catch((error) => console.error("Error loading questions:", error));
+      .catch((error) => {
+        console.error("Error loading questions:", error);
+        alert("Could not load quiz questions. Returning to menu.");
+        window.location.href = "index.html";
+      });
   }
 
   function showQuestion() {
@@ -136,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function handleAnswer(e) {
-    const selected = e.target.dataset.answer;
+    const selected = e.currentTarget.dataset.answer;
     const correct = questions[currentQuestion].correctAnswer;
     const explanation = questions[currentQuestion].explanation;
 
@@ -181,6 +213,11 @@ document.addEventListener("DOMContentLoaded", () => {
       showQuestion();
     }
   }
+
+  // Handle hash changes (if someone changes the hash while on the quiz page)
+  window.addEventListener("hashchange", () => {
+    location.reload();
+  });
 
   initializeQuiz();
 });

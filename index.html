@@ -3,28 +3,92 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Moral Theology Quiz</title>
+    <title>Moral Theology Quiz Selection</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      .quiz-selection {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+      }
+
+      .quiz-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        background-color: #f8f9fa;
+      }
+
+      .quiz-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .quiz-card h2 {
+        margin-top: 0;
+        color: #007bff;
+      }
+
+      .quiz-card p {
+        color: #6c757d;
+      }
+
+      .main-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+    </style>
   </head>
   <body>
-    <div class="controls">
-      <button id="shuffleBtn">Shuffle Questions</button>
-    </div>
-    <div class="container">
-      <h1>Moral Theology Quiz</h1>
-      <div id="timer">Time elapsed: 0:00</div>
-      <div id="progress">Question 1 of 10</div>
-      <div id="question-container">
-        <div id="question"></div>
-        <div id="choices"></div>
-        <div id="explanation"></div>
-        <div id="score"></div>
-        <div class="nav-buttons">
-          <button id="back">Back</button>
-          <button id="next">Next Question</button>
-        </div>
+    <div class="main-container">
+      <h1>Moral Theology Quiz Selection</h1>
+      <p>Select a quiz module to begin:</p>
+
+      <div class="quiz-selection" id="quiz-selection">
+        <!-- Quiz cards will be dynamically loaded here -->
       </div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Define available quizzes
+        const availableQuizzes = [
+          {
+            id: "Q1",
+            title: "Module 1: Principles of Moral Theology",
+            description:
+              "Covers principles of moral theology, freedom, and conscience.",
+          },
+          {
+            id: "Q2",
+            title: "Module 2: Sin, Grace, and Christian Vocation",
+            description: "Covers sin, grace, and the Christian vocation.",
+          },
+        ];
+
+        const quizSelection = document.getElementById("quiz-selection");
+
+        // Create quiz cards
+        availableQuizzes.forEach((quiz) => {
+          const card = document.createElement("div");
+          card.className = "quiz-card";
+          card.innerHTML = `
+            <h2>${quiz.title}</h2>
+            <p>${quiz.description}</p>
+            <button onclick="startQuiz('${quiz.id}')">Start Quiz</button>
+          `;
+          quizSelection.appendChild(card);
+        });
+      });
+
+      function startQuiz(quizId) {
+        window.location.href = `quiz.html#${quizId}`;
+      }
+    </script>
   </body>
 </html>
