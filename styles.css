@@ -19,6 +19,7 @@ body {
 #question {
   font-size: 1.2em;
   margin-bottom: 20px;
+  animation: fadeIn 0.5s ease;
 }
 
 .choice {
@@ -29,6 +30,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  animation: slideIn 0.3s ease;
 }
 
 .choice:hover {
@@ -46,6 +48,7 @@ body {
 
 #explanation.show {
   opacity: 1;
+  animation: fadeIn 0.5s ease;
 }
 
 #score {
@@ -70,6 +73,9 @@ button:hover {
 .controls {
   margin: 20px 0;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 #shuffleBtn {
@@ -120,6 +126,7 @@ button:hover {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   background-color: #f8f9fa;
+  animation: fadeIn 0.5s ease;
 }
 
 .quiz-card:hover {
@@ -139,6 +146,179 @@ button:hover {
 
 .quiz-card button {
   background-color: #007bff;
+}
+
+/* Question Indicators */
+.question-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 15px 0;
+  gap: 8px;
+}
+
+.question-indicator {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.question-indicator:hover {
+  transform: scale(1.1);
+}
+
+.question-indicator.current {
+  border: 2px solid #007bff;
+}
+
+.question-indicator.answered {
+  background-color: #6c757d;
+  color: white;
+}
+
+.question-indicator.correct {
+  background-color: #28a745;
+  color: white;
+}
+
+.question-indicator.incorrect {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Results Summary Styles */
+.results-container {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.results-score {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.results-score span {
+  color: #007bff;
+}
+
+.results-time {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.results-breakdown {
+  margin-top: 15px;
+}
+
+.results-breakdown h3 {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.result-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.result-item:hover {
+  background-color: #e9ecef;
+}
+
+.result-item.correct {
+  border-left: 4px solid #28a745;
+}
+
+.result-item.incorrect {
+  border-left: 4px solid #dc3545;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* Tooltip Styles */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Animation Styles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Responsive styles */
@@ -177,5 +357,32 @@ button:hover {
 
   .quiz-selection {
     grid-template-columns: 1fr;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .controls button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  .question-indicators {
+    gap: 5px;
+  }
+
+  .question-indicator {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-actions button {
+    width: 100%;
   }
 }

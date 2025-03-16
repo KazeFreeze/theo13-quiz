@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let timerInterval;
   let quizId = "";
   let quizTitle = "";
+  let elapsedSeconds = 0;
+  let quizCompleted = false;
 
   // Get the quiz ID from the URL hash
   function getQuizId() {
@@ -48,20 +50,30 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("explanation").classList.remove("show");
     document.getElementById("next").style.display = "none";
     document.getElementById("back").style.display = "none";
+
+    // Clear any existing results
+    const oldResults = document.querySelector(".results-container");
+    if (oldResults) {
+      oldResults.remove();
+    }
+
+    quizCompleted = false;
     showQuestion();
+    createQuestionIndicators();
     stopTimer();
     startTimer();
   }
 
   function startTimer() {
     startTime = Date.now();
+    elapsedSeconds = 0;
     timerInterval = setInterval(updateTimer, 1000);
   }
 
   function updateTimer() {
-    const elapsed = Date.now() - startTime;
-    const minutes = Math.floor(elapsed / 60000);
-    const seconds = Math.floor((elapsed % 60000) / 1000);
+    elapsedSeconds++;
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
     document.getElementById(
       "timer"
     ).textContent = `Time elapsed: ${minutes}:${seconds
@@ -73,10 +85,106 @@ document.addEventListener("DOMContentLoaded", () => {
     clearInterval(timerInterval);
   }
 
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
+  }
+
   function calculateScore() {
     return userAnswers.reduce((acc, answer) => {
       return acc + (answer.selected === answer.correct ? 1 : 0);
     }, 0);
+  }
+
+  function createQuestionIndicators() {
+    // Remove existing indicators if any
+    const oldIndicators = document.querySelector(".question-indicators");
+    if (oldIndicators) {
+      oldIndicators.remove();
+    }
+
+    // Create new indicators container
+    const indicatorsDiv = document.createElement("div");
+    indicatorsDiv.className = "question-indicators";
+
+    // Create indicator for each question
+    for (let i = 0; i < questions.length; i++) {
+      const indicator = document.createElement("div");
+      indicator.className = "question-indicator";
+      indicator.textContent = i + 1;
+
+      // Add appropriate classes based on answer status
+      if (i === currentQuestion) {
+        indicator.classList.add("current");
+      }
+
+      if (userAnswers[i]) {
+        indicator.classList.add("answered");
+        if (userAnswers[i].selected === userAnswers[i].correct) {
+          indicator.classList.add("correct");
+        } else {
+          indicator.classList.add("incorrect");
+        }
+      }
+
+      // Add tooltip to show question info on hover
+      indicator.innerHTML = `<span>${i + 1}</span>
+        <div class="tooltip-text">Question ${i + 1}${
+        userAnswers[i]
+          ? userAnswers[i].selected === userAnswers[i].correct
+            ? " - Correct!"
+            : " - Incorrect"
+          : " - Not answered"
+      }</div>`;
+      indicator.classList.add("tooltip");
+
+      // Add click handler to jump to that question
+      indicator.addEventListener("click", () => {
+        currentQuestion = i;
+        showQuestion();
+        updateQuestionIndicators();
+      });
+
+      indicatorsDiv.appendChild(indicator);
+    }
+
+    // Insert indicators after the progress div
+    const progressDiv = document.getElementById("progress");
+    progressDiv.parentNode.insertBefore(indicatorsDiv, progressDiv.nextSibling);
+  }
+
+  function updateQuestionIndicators() {
+    const indicators = document.querySelectorAll(".question-indicator");
+
+    indicators.forEach((indicator, index) => {
+      // Reset all
+      indicator.classList.remove("current", "answered", "correct", "incorrect");
+
+      // Add appropriate classes
+      if (index === currentQuestion) {
+        indicator.classList.add("current");
+      }
+
+      if (userAnswers[index]) {
+        indicator.classList.add("answered");
+        if (userAnswers[index].selected === userAnswers[index].correct) {
+          indicator.classList.add("correct");
+        } else {
+          indicator.classList.add("incorrect");
+        }
+      }
+
+      // Update tooltip
+      const tooltipText = indicator.querySelector(".tooltip-text");
+      tooltipText.textContent = `Question ${index + 1}${
+        userAnswers[index]
+          ? userAnswers[index].selected === userAnswers[index].correct
+            ? " - Correct!"
+            : " - Incorrect"
+          : " - Not answered"
+      }`;
+    });
   }
 
   function initializeQuiz() {
@@ -104,6 +212,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document
           .getElementById("back")
           .addEventListener("click", previousQuestion);
+
+        createQuestionIndicators();
         startTimer();
         showQuestion();
       })
@@ -165,6 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "score"
     ).textContent = `Score: ${calculateScore()}/${questions.length}`;
+
+    // Update question indicators
+    updateQuestionIndicators();
   }
 
   function handleAnswer(e) {
@@ -193,6 +306,100 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById(
       "score"
     ).textContent = `Score: ${calculateScore()}/${questions.length}`;
+
+    // Update question indicators
+    updateQuestionIndicators();
+  }
+
+  function showResults() {
+    // Stop the timer
+    stopTimer();
+    quizCompleted = true;
+
+    // Calculate final score
+    const finalScore = calculateScore();
+    const percentage = Math.round((finalScore / questions.length) * 100);
+
+    // Create results container
+    const resultsContainer = document.createElement("div");
+    resultsContainer.className = "results-container";
+
+    // Add header and summary
+    resultsContainer.innerHTML = `
+      <div class="results-header">
+        <h2>Quiz Results</h2>
+      </div>
+      <div class="results-score">
+        You scored <span>${finalScore}/${
+      questions.length
+    }</span> (${percentage}%)
+      </div>
+      <div class="results-time">
+        Completion time: ${formatTime(elapsedSeconds)}
+      </div>
+      <div class="results-breakdown">
+        <h3>Question Breakdown</h3>
+        <div id="results-list"></div>
+      </div>
+      <div class="result-actions">
+        <button id="retry-quiz" class="btn-primary">Try Again</button>
+        <button id="return-menu" class="btn-secondary">Return to Menu</button>
+      </div>
+    `;
+
+    // Add to the DOM
+    const container = document.querySelector(".container");
+    container.appendChild(resultsContainer);
+
+    // Add question breakdown
+    const resultsList = document.getElementById("results-list");
+    userAnswers.forEach((answer, index) => {
+      const isCorrect = answer.selected === answer.correct;
+      const resultItem = document.createElement("div");
+      resultItem.className = `result-item ${
+        isCorrect ? "correct" : "incorrect"
+      }`;
+
+      resultItem.innerHTML = `
+        <div><strong>Question ${index + 1}:</strong> ${questions[
+        index
+      ].question.substring(0, 100)}${
+        questions[index].question.length > 100 ? "..." : ""
+      }</div>
+        <div>Your answer: ${answer.selected} - ${
+        isCorrect ? "Correct" : "Incorrect"
+      }</div>
+      `;
+
+      resultsList.appendChild(resultItem);
+    });
+
+    // Add event listeners for action buttons
+    document.getElementById("retry-quiz").addEventListener("click", () => {
+      resultsContainer.remove();
+      resetQuiz();
+    });
+
+    document.getElementById("return-menu").addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
+
+    // Hide the question container
+    document.getElementById("question-container").style.display = "none";
+  }
+
+  function resetQuiz() {
+    currentQuestion = 0;
+    userAnswers = [];
+    document.getElementById("score").textContent = "";
+    document.getElementById("explanation").classList.remove("show");
+    document.getElementById("next").style.display = "none";
+    document.getElementById("back").style.display = "none";
+    document.getElementById("question-container").style.display = "block";
+    quizCompleted = false;
+    showQuestion();
+    createQuestionIndicators();
+    startTimer();
   }
 
   function nextQuestion() {
@@ -200,10 +407,13 @@ document.addEventListener("DOMContentLoaded", () => {
       currentQuestion++;
       showQuestion();
     } else {
-      stopTimer();
-      alert(
-        `Quiz completed! Final score: ${calculateScore()}/${questions.length}`
-      );
+      // Check if all questions have been answered
+      if (userAnswers.length === questions.length && !quizCompleted) {
+        showResults();
+      } else {
+        stopTimer();
+        showResults();
+      }
     }
   }
 
