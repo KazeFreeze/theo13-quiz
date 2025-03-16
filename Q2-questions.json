@@ -133,6 +133,71 @@
     },
     {
       "module": "Module 2",
+      "section": 2.1,
+      "question": "In a Catholic perspective, sin has the character of a privation in the sense that sinners lack:",
+      "choices": {
+        "A": "Social acceptance, hence the imperative to construct an inclusive, morally permissive society.",
+        "B": "The assistance of God's grace, without which sin is inevitable and with which it is impossible.\r\n",
+        "C": "An upright conscience, their choices being in disagreement with their knowledge of moral truth.\r\n",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.1,
+      "question": "The Old Testament presents sin under different aspects, such as:",
+      "choices": {
+        "A": "An abuse of human freedom, rooted in a willfull rebellion against God, which distorts the sinner's inner being.",
+        "B": "A failure of creativity or self-assertion against the coercive forces exerted through established social norms.",
+        "C": "A free, self determining choice to reject God's offer of grace and friendship, medicated through Jesus Christ.",
+        "D": "All of the above"
+      },
+      "correctAnswer": "A",
+      "explanation": "FC, pp. 149-150, 154-155"
+    },
+    {
+      "module": "Module 2",
+      "section": 2.1,
+      "question": "In a Catholic perspective, sin has a social dimension in the sense that:",
+      "choices": {
+        "A": "The acceptance of sinful behavior at a social level obscures moral thruth, conducing to sin.",
+        "B": "Standards of good and evil are culturally conditioned, hence lacking universal applicability.",
+        "C": "God inflicts temporal punishments upon entire communities for the sins of their members.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "A",
+      "explanation": "FC, p. 158"
+    },
+    {
+      "module": "Module 2",
+      "section": 2.1,
+      "question": "Sin frustrates human fulfillment by preventing the realization of substantive goods, such as when:",
+      "choices": {
+        "A": "Knowing persistence in sin can harm the good of health by engendering anxiety, depression, changes in sleep patterns or appetite, etc.",
+        "B": "Sinful choices gain social acceptance, shifting conventional perceptions of good and evil, and thereby obscuring the knowledge of truth.",
+        "C": "One sins for any reason, since \"sin\" is nothing other than wrongdoing insofar as it disrupts the good of religion, i.e. harmony with God.",
+        "D": "Option 1 and 2"
+      },
+      "correctAnswer": "D",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.1,
+      "question": "Guilt is not primarily a psychological phenomenon, since:",
+      "choices": {
+        "A": "Guilt is primarily a sociological phenomenon, indicating ascription to an out-group due to an antisocial behavior.",
+        "B": "Sin, being a disruption of our relationship with God, is a spirititual phenomenon with no bearing on bodily health.",
+        "C": "Sin pressupposes choice, and choices determine the one who chooses even if he or she is not troubled by them.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
       "section": 2.2,
       "question": "Proponents of a revisionist theory of the fundamental option, such as Karl Rahner, maintain that our discrete choices:",
       "choices": {
@@ -263,6 +328,71 @@
     },
     {
       "module": "Module 2",
+      "section": 2.2,
+      "question": "Grizes writes that those who try to live uprightly often reach a point where they have few morally significant choices to make. By this he means that:",
+      "choices": {
+        "A": "God's law stifles creativity and restricts human freedom, inhibiting people from pursuing goods they would otherwise find fulfilling.\r",
+        "B": "Such people have formed a godo character, with the result that their daily routine reflects and expresses their basic commitments.",
+        "C": "The only truly significant choice is whether to accept or to reject a relationship with God, that is, to accept or to reject faith.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "B",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.2,
+      "question": "According to Grisez, the act of faith is the fundamental option of a Christian in the sense that:",
+      "choices": {
+        "A": "One can never know with certitude whether he or she has genuinely accepted Jesus or instead merely honors him outwardly (Mt. 15:8).",
+        "B": "It organizes the believer's life, whereby he or she commits to follow Jesus and be like him, while also avoiding all things to the contrary.",
+        "C": "\nThe one thing necessary for salvation is to profess faith in Jesus Christ (Rom. 10:9); all other doctrines are superfluous human inventions.",
+        "D": "All of the above.\r"
+      },
+      "correctAnswer": "B",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.2,
+      "question": "According to Grisez, Catholics who willfully do what the Church teaches is gravely wrong:\r",
+      "choices": {
+        "A": "Do not sin, since morality is a personal construct and no one can be bound by moral norms she has not chosen to follow.",
+        "B": "Sin lightly, since many things the Church teaches to be gravely wrong do not seriously harm physical or mental wellbeing.",
+        "C": "Sin gravely, since their rejection of the Church's authority is incompatible with being a faithful member of its communion.",
+        "D": "Option 1 and 2"
+      },
+      "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.2,
+      "question": "According to Grisez, \"light matter\" should be understood as:",
+      "choices": {
+        "A": "The external violation of a moral norm, irrespective of intent, and its consequences.",
+        "B": "Moral wrongdoing which is not in conflict with faith or its consequent responsibilities.",
+        "C": "Circumstances lessening one's responsibility for committing an objectively serious sin.",
+        "D": "None of the above"
+      },
+      "correctAnswer": "B",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.2,
+      "question": "According to its critics, difficulties with the revisionist theory of the fundamental option include its implication that:",
+      "choices": {
+        "A": "All of a person's choices should be in accord with the ideal of integral human fulfillment for him or her to be reckoned morally good.",
+        "B": "It is possible to knowingly choose in ways incompatible with the commitment of faith without thereby becoming a morally bad person.",
+        "C": "Supernatural charity is lost not only through the direct rejection of God, but through every grave sin committed knowingly and freely.",
+        "D": "Option 1 and 2"
+      },
+      "correctAnswer": "B",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
       "section": 2.5,
       "question": "An example of the \"poverty of spirit\" involved in the first mode of Christian response (MCR1) could be:",
       "choices": {
@@ -376,6 +506,71 @@
         "D": "All of the above"
       },
       "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.5,
+      "question": "Darwin (born Winnie) was dismissed from his parish's ministry of lectors after coming out as transgender. Modes of Christian Response potentially relevant to his personal vocation may include:",
+      "choices": {
+        "A": "MCR6, inasmuch as Darwin should suppress his feelings and keep silent for the sake of the peace of the parish in humble resignation.",
+        "B": "MCR3, inasmuch as continued membership in a non-affirming church is a needless hardship, avoidable through Christian detachment.",
+        "C": "MCR4, inasmuch as continued membership in a non-affirming church is a necessary hardship, to be borne with Christian fortitude.",
+        "D": "None of the above."
+      },
+      "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.5,
+      "question": "MCR7 (\"peacemaking\") goes beyond its corresponding mode of responsibility (MR7), in that:",
+      "choices": {
+        "A": "Mere fairness is not enough to achieve justice and repair relationships; therefore, Christians should imitate Christ's example of mercy.",
+        "B": "The great good of salvation outweighs the harm caused by the use of violence; therefore, Christians may engage in coercive proselytism.",
+        "C": "Merely tolerating our enemies falls short of the standards Christ modeled for us by seeking to restore sinners to the friendship of God.",
+        "D": "None of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.5,
+      "question": "An example of the \"meekness\" involved in the second mode of Christian response (MCR2) could be:",
+      "choices": {
+        "A": "A priest who delegates the pastoral care of the sick in his parish to laypersons, so that he can focus on administrative work.",
+        "B": "A man whose wife left him for another man, who is now contemplating civil marriage to another woman he has been dating.",
+        "C": "A woman who, thinking the prohibition on women's ordination unjust, conceals her sex to gain admission to the seminary.",
+        "D": "None of the above"
+      },
+      "correctAnswer": "D",
+      "explanation": ""
+    },
+    {
+      "module": "Module 2",
+      "section": 2.5,
+      "question": "An example of the \"poverty of spirit\" involved in the first mode of Christian response (MCR1) could be:",
+      "choices": {
+        "A": "A man who fervently thanks God for making him zealous and righteous, in contrast to those who are \"Christians in name only.\"",
+        "B": "A woman who puts off going to confession because she knows God could never forgive sins as numerous and grave as her own.",
+        "C": "A woman who receives a terminal cancer diagnosis and prays to God for a cure, \"or if it be not Your will, then a peaceful death.\"",
+        "D": "All of the above"
+      },
+      "correctAnswer": "C",
+      "explanation": "\"Humility consists in seeking everything from God, accepting all that he gives, and being fully aware and grateful for it...And with humility, Christian life becomes authentically Eucharistic - a grateful response to God's gift of justification and adoption;\" see FC, p. 306; cf. Job 2:10."
+    },
+    {
+      "module": "Module 2",
+      "section": 2.5,
+      "question": "Miguel is a Catholic struggling with alcoholism. Modes of Christian Response potentially relevant to his personal vocation may include:",
+      "choices": {
+        "A": "MCR6, inasmuch as he should deal with relapses with a spirit of repentance and a new resolve to strive for sobriety.",
+        "B": "MCR1, inasmuch as he should unite his own struggles to Christ's passion and entrust himself to divine providence.",
+        "C": "MCR3, inasmuch as he should see his condition as divinely willed and purify his life of anything that conflicts with it.",
+        "D": "Option 1 and 2"
+      },
+      "correctAnswer": "D",
       "explanation": ""
     }
   ]
