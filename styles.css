@@ -300,7 +300,7 @@ button:hover {
   opacity: 1;
 }
 
-/* Animation Styles */
+/* Animation styles */
 @keyframes fadeIn {
   from {
     opacity: 0;
