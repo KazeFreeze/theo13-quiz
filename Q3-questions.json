@@ -186,19 +186,6 @@
     {
       "module": "Module 3",
       "section": 3.3,
-      "question": "Christian spouses suffering from infertility model MCR1 (\"Humility\") when they: \nfertilization instead.",
-      "choices": {
-        "A": "Recognize their condition as God's way of calling them to conceive through in vitro fertilization instead.",
-        "B": "Approach friends or relatives to see if any would be willing to carry the couple's embryo as a surrogate.",
-        "C": "Continue cultivating the qualities of good parents, as by supporting friends or relatives who are parents.",
-        "D": "All of the above"
-      },
-      "correctAnswer": "C",
-      "explanation": ""
-    },
-    {
-      "module": "Module 3",
-      "section": 3.3,
       "question": "Grisez suggests that couples should be cautious in following advice and guidance regarding marriage, since:",
       "choices": {
         "A": "Each marriage is unique, and no one else can discern for spouses what is God's will for their marriage.",
@@ -386,7 +373,7 @@
         "A": "Improving their children's chances of getting into a good university by doing their homework for them.",
         "B": "Refusing a child's offer to help with chores because his or her involvement would slow down the work",
         "C": "Reserving most of their paychecks for family expenses and giving their children only a small allowance.",
-        "D": "Option land Option 2"
+        "D": "Option 1 and Option 2"
       },
       "correctAnswer": "D",
       "explanation": ""
@@ -451,19 +438,6 @@
         "A": "Equally/All the baptized are children of God and share equally in his grace (Gal. 3:28).",
         "B": "More / Children owe parents a special gratitude for having given them life (Sir. 3:1-11).",
         "C": "Less / Familial bonds are bonds of love, which \"remembers not wrongs\" (I Cor. 13:5).",
-        "D": "None of the above"
-      },
-      "correctAnswer": "B",
-      "explanation": ""
-    },
-    {
-      "module": "Module 3",
-      "section": 3.6,
-      "question": "Among other reasons, the Catholic Church prohibits eulogies at funeral liturgies because:",
-      "choices": {
-        "A": "Reflecting on the good qualities of the deceased would deny catharsis to their aggrieved family members.",
-        "B": "Glorifying the deceased in this way obscures the importance of praying that God will be merciful to them.",
-        "C": "The effects of God's grace in a believer's life cannot be numbered; thus, such an attempt is blasphemous.",
         "D": "None of the above"
       },
       "correctAnswer": "B",
@@ -550,12 +524,12 @@
     {
       "module": "Module 3",
       "section": 3.6,
-      "question": "The Catholic tradition understands the primary and specific contribution of the family to society to be:",
+      "question": "An adult child who disagrees with his own parents about parenting styles would respond appropriately by:",
       "choices": {
-        "A": "Providing for the common good through the exercise of political authority.",
-        "B": "Preparing family members to enter and sustain loving interpersonal relationships.",
-        "C": "Developing the earth and its resources, turning them to the service of humanity.",
-        "D": "Option 1 and Option 2"
+        "A": "Deferring to the parent's advice completely, since children remain subject to their parents in adulthood.",
+        "B": "Considering the merits of the parent's advice and calmly expressing what may be unreasonable about it.",
+        "C": "Refusing to listen to the parent's advice, since the adult child alone knows what is best for his children.",
+        "D": "All of the above"
       },
       "correctAnswer": "B",
       "explanation": ""
